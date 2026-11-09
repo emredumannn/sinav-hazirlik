@@ -195,7 +195,7 @@ function renderQ(q,opts){
   let check;
   if(q.t==='mc'){
     let sel=null;
-    body.innerHTML=q.opts.map((o,i)=>`<button class="opt" data-i="${i}"><span class="ol">${'ABCDEFG'[i]}</span><span>${esc(o)}</span></button>`).join('');
+    body.innerHTML=q.opts.map((o,i)=>`<button class="opt" data-i="${i}"><span class="ol">${'ABCDEFG'[i]}</span><span>${String(o).startsWith('<img')?o:esc(o)}</span></button>`).join('')+(q.src?`<div class="muted small">📄 ${esc(q.src)}</div>`:'');
     body.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{ if(box.dataset.done) return; sel=+b.dataset.i; body.querySelectorAll('.opt').forEach(x=>x.classList.toggle('sel',x===b)); if(!exam) check(); });
     check=()=>{ if(sel===null) return null; box.dataset.done=1; const good=sel===q.a; body.querySelectorAll('.opt').forEach((x,i)=>{x.classList.toggle('right',i===q.a); x.classList.toggle('wrong',i===sel&&!good);}); return fin(good); };
   } else if(q.t==='order'){
@@ -381,17 +381,22 @@ V.c=(cid,sub,arg)=>{ const c=COURSES[cid]; if(!c) return '<p>Bulunamadı</p>';
     return `<h1 class="pt">${c.icon} ${esc(c.units[u])}</h1><p class="muted small">${qs.length} soru · ${s} tam doğru. Önce kendin yaz, sonra "Kontrol et". Yazım farkı varsa "✓ doğru sayılsın"a bas.</p><div id="ql"></div><div class="row center"><a class="btn ghost" href="#c/${cid}">← ${c.short}</a><button class="btn ghost" id="reset">Sıfırla</button></div>`; }
   if(sub==='mock') return mockHTML(c.mocks.find(x=>x.id===arg),'Gerçek sınav gibi çöz. Cevaplar "Sınavı bitir"e basınca kontrol edilir. Yazma sorularında modeli okuyup kendini checklist ile puanla.');
   if(sub==='cards') return V.cards(cid);
+  if(sub==='quiz') return `<h1 class="pt">${c.icon} Rastgele deneme</h1><p class="muted small">${c.quiz} karışık soru. Hepsini işaretle, sonra "Bitir ve puanla"ya bas.</p><div id="ql"></div><div class="row center"><button class="btn" id="fin">Bitir ve puanla</button><button class="btn ghost" id="again">Yeni deneme</button></div><div id="qres"></div>`;
   const s=cstats(cid);
   return `<section class="hero ${cid}"><div class="kicker">${c.short}</div><h1>${c.icon} ${c.name}</h1><p>${c.sub}</p><div class="stat"><div><b>${s.good}</b><span>tam doğru</span></div><div><b>${s.done}/${s.total}</b><span>çözülen</span></div><div><b>${c.mocks.length}</b><span>deneme</span></div></div></section>
   <h2 class="sec">📖 Konu özeti</h2>${c.notes.map(n=>`<a class="ucard" href="#c/${cid}/n/${n.id}"><div><b>${n.title}</b></div></a>`).join('')}
   <h2 class="sec">✏️ Alıştırmalar (PA tarzı)</h2>${Object.entries(c.units).map(([u,t])=>{const qs=c.qs.filter(q=>q.u===+u); const g=qs.filter(q=>S.ans[q.id]&&S.ans[q.id].ok===true).length; return `<a class="ucard" href="#c/${cid}/ex/${u}"><div><b>${esc(t)}</b><small>${qs.length} soru · ${g} doğru</small></div>${bar(qs.length?g/qs.length:0)}</a>`}).join('')}
-  <h2 class="sec">📝 Deneme sınavları</h2>${c.mocks.map(m=>{const r=S.mock[m.id];return `<a class="ucard big" href="#c/${cid}/mock/${m.id}"><div><b>${m.title}</b><small>${m.sub}${r!=null?` · son puan: %${r}`:''}</small></div></a>`}).join('')}
-  <h2 class="sec">🃏 Son tekrar</h2><a class="ucard" href="#c/${cid}/cards"><div><b>Kartlar</b><small>${c.cards.length} kart, sabah için</small></div></a>`; };
+  ${c.quiz?`<h2 class="sec">🎲 Rastgele deneme</h2><a class="ucard big" href="#c/${cid}/quiz"><div><b>${c.quiz} soruluk karışık test</b><small>Bütün sorulardan rastgele, sonunda puan</small></div></a>`:''}
+  ${c.mocks.length?`<h2 class="sec">📝 Deneme sınavları</h2>${c.mocks.map(m=>{const r=S.mock[m.id];return `<a class="ucard big" href="#c/${cid}/mock/${m.id}"><div><b>${m.title}</b><small>${m.sub}${r!=null?` · son puan: %${r}`:''}</small></div></a>`}).join('')}`:''}
+  ${c.cards.length?`<h2 class="sec">🃏 Son tekrar</h2><a class="ucard" href="#c/${cid}/cards"><div><b>Kartlar</b><small>${c.cards.length} kart, sabah için</small></div></a>`:''}`; };
 V.c.after=(cid,sub,arg)=>{ const c=COURSES[cid]; if(!c) return;
   if(sub==='ex'){ const u=+arg; const ql=$('#ql'); c.qs.filter(q=>q.u===u).forEach(q=>ql.appendChild(renderQ(q)));
     $('#reset').onclick=()=>{ if(!confirm('Bu bölümdeki cevapların silinsin mi?')) return; c.qs.filter(q=>q.u===u).forEach(q=>{delete S.ans[q.id]; delete S.drafts[q.id];}); save(); route(); }; }
   if(sub==='mock') mockRun(c.mocks.find(x=>x.id===arg),arg);
-  if(sub==='cards') V.cards.after(cid); };
+  if(sub==='cards') V.cards.after(cid);
+  if(sub==='quiz'){ const pool=shuffle(c.qs.filter(q=>AUTO(q.t))).slice(0,c.quiz); const ql=$('#ql'); const boxes=pool.map(q=>{const b=renderQ(q,{exam:true}); ql.appendChild(b); return b;});
+    $('#again').onclick=()=>route();
+    $('#fin').onclick=()=>{ let g=0,emp=0; boxes.forEach(b=>{const r=b._check(); if(r===true) g++; if(r===null) emp++;}); $('#qres').innerHTML=`<div class="big-score">${g}/${pool.length}<small>%${Math.round(g/pool.length*100)} · ${emp?emp+' boş':'hepsi cevaplandı'}</small></div>`; $('#qres').scrollIntoView({behavior:'smooth'}); }; } };
 
 V.files=()=>`<h1 class="pt">Ders Materyalleri</h1><p class="muted">iPhone'da dosyaya dokununca önizleme açılır. Arkadaşına bu sayfanın linkini gönderebilirsin.</p>
  <h2 class="sec">Sunumlar (sınav konuları)</h2>
@@ -414,7 +419,7 @@ V.files=()=>`<h1 class="pt">Ders Materyalleri</h1><p class="muted">iPhone'da dos
  <p class="muted small">ETRAV ders kitapçıkları çok büyük (100–150 MB) olduğu için siteye konmadı. Tüm içerikleri ETRAV bölümündeki konu özetlerinde.</p>`;
 
 // ---------------- ROUTER ----------------
-const TABS=[['home','🏠','Ana'],['w','✍️','Writing'],['c/ltl','🧠','LTL'],['c/etrav','✈️','ETRAV']];
+const TABS=[['home','🏠','Ana'],['w','✍️','Writing'],['c/ltl','🧠','LTL'],['c/etrav','✈️','ETRAV'],['c/isg','🦺','İSG']];
 const TABOF={w:'w',topics:'w',practice:'w',mocks:'w',cards:'w',strateji:'w',u1:'w',u2:'w',u3:'w',ex1:'w',ex2:'w',ex3:'w',quiz:'w',wrong:'w',mock:'w',lab:'w',files:'home'};
 function route(){
   const h=(location.hash||'#home').slice(1); const parts=h.split('/'); const name=parts[0], args=parts.slice(1); const v=V[name]||V.home;

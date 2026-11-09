@@ -112,3 +112,5 @@ textarea,#ltitle{width:100%;font:16px/1.5 inherit;font-family:inherit;padding:10
 .mini{border:1px solid var(--line);background:var(--card);color:var(--mut);border-radius:8px;padding:2px 8px;font-size:12px;margin-left:6px;cursor:pointer}
 #toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:#222;color:#fff;padding:9px 16px;border-radius:20px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;max-width:90vw;text-align:center}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.qimg{display:block;max-width:110px;max-height:110px;margin:4px 0 8px;border-radius:6px}
+.optimg{height:44px;vertical-align:middle}
