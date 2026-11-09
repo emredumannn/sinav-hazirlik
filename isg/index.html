@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>İSG Soru Bankası</title>
+<meta name="description" content="İş Sağlığı ve Güvenliği dersi 2025 ve 2026 örnek soruları">
+<meta name="theme-color" content="#e8590c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="İSG Sorular">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<link rel="manifest" href="manifest.json">
+<style>
+:root{--bg:#f5f3ef;--card:#fff;--ink:#1d1b19;--mut:#6f6a64;--line:#e5e0d8;--pri:#e8590c;--pri2:#c2410c;--ok:#1b7f45;--okb:#e3f4e9;--no:#c0271c;--nob:#fde8e6;--wa:#8a5a00;--wab:#fff3d6}
+@media (prefers-color-scheme:dark){:root{--bg:#141210;--card:#1f1c19;--ink:#f2eee9;--mut:#a59e96;--line:#36312c;--pri:#ff7a2e;--pri2:#ff9b5c;--ok:#5ccc8a;--okb:#13281b;--no:#ff7a70;--nob:#311614;--wa:#f2b84a;--wab:#2d2310}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+header{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:8px;padding:calc(env(safe-area-inset-top) + 10px) 14px 10px;background:var(--pri);color:#fff}
+header b{flex:1;font-size:17px}
+#back{background:none;border:0;color:#fff;font-size:30px;line-height:1;width:32px;padding:0;cursor:pointer}
+main{max-width:720px;margin:0 auto;padding:14px 16px}
+.hero{background:linear-gradient(135deg,#e8590c,#9a3412);color:#fff;border-radius:18px;padding:18px;margin-bottom:14px}
+.hero h1{margin:0 0 4px;font-size:24px}.hero p{margin:0;opacity:.92;font-size:14px}
+.stats{display:flex;gap:8px;margin-top:14px}.stats div{flex:1;background:rgba(255,255,255,.16);border-radius:12px;padding:8px;text-align:center}
+.stats b{display:block;font-size:20px}.stats span{font-size:11px}
+h2{font-size:17px;margin:20px 0 10px}
+.sec{display:block;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--pri);border-radius:14px;padding:12px 14px;margin-bottom:9px;text-decoration:none;color:var(--ink)}
+.sec.star{border-left-color:#d97706;background:linear-gradient(90deg,var(--wab),var(--card))}
+.sec small{display:block;color:var(--mut);font-size:13px}
+.bar{height:6px;background:var(--line);border-radius:6px;margin-top:8px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ok)}
+.btn{display:inline-block;background:var(--pri);color:#fff;border:0;border-radius:12px;padding:12px 16px;font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;text-align:center}
+.btn.ghost{background:transparent;color:var(--pri);border:1.5px solid var(--pri)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.row .btn{flex:1}
+.note{background:var(--wab);border-radius:12px;padding:10px 12px;font-size:14px;margin:10px 0}
+.q{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:14px}
+.qh{display:flex;justify-content:space-between;color:var(--mut);font-size:12px;margin-bottom:6px}
+.qt{font-weight:600;margin-bottom:8px}
+.qimg{display:block;max-width:120px;max-height:120px;margin:4px 0 10px;border-radius:6px;background:#fff}
+.opt{display:flex;gap:10px;align-items:center;width:100%;text-align:left;background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:10px;margin:6px 0;font-size:15px;color:var(--ink);cursor:pointer}
+.opt .l{flex:none;width:26px;height:26px;border-radius:50%;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+.opt img{height:46px}
+.opt.sel{border-color:var(--pri)}.opt.sel .l{background:var(--pri);color:#fff}
+.opt.ok{border-color:var(--ok);background:var(--okb)}.opt.ok .l{background:var(--ok);color:#fff}
+.opt.no{border-color:var(--no);background:var(--nob)}.opt.no .l{background:var(--no);color:#fff}
+.ex{background:var(--wab);border-radius:10px;padding:8px 10px;font-size:14px;margin-top:8px}
+.score{text-align:center;font-size:44px;font-weight:800;color:var(--pri);background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}.score small{display:block;font-size:13px;color:var(--mut);font-weight:500}
+.empty{text-align:center;color:var(--mut);padding:30px 10px}
+.foot{text-align:center;color:var(--mut);font-size:12px;margin-top:20px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 12px}.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:20px;padding:7px 12px;font-size:13px;cursor:pointer}.chip.on{background:var(--pri);color:#fff;border-color:var(--pri)}
+</style>
+</head>
+<body>
+<header><button id="back" aria-label="Geri">‹</button><b>🦺 İSG Soru Bankası</b></header>
+<main id="app"></main>
+<script src="sorular.js"></script>
+<script>
+(function(){
+'use strict';
+const SECS=window.ISG, ALLQ=[]; SECS.forEach(s=>s.qs.forEach(q=>{q.sec=s.id;ALLQ.push(q);}));
+const BY={}; ALLQ.forEach(q=>BY[q.id]=q);
+const KEY='isg_sorular_v1'; let S={a:{}};
+try{const r=localStorage.getItem(KEY); if(r) S=JSON.parse(r)||S; if(!S.a) S.a={};}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}};
+const $=s=>document.querySelector(s), app=$('#app');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const L='ABCDE';
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const bar=p=>`<div class="bar"><i style="width:${Math.round(p*100)}%"></i></div>`;
+function st(qs){const d=qs.filter(q=>q.id in S.a).length, g=qs.filter(q=>S.a[q.id]===true).length; return {n:qs.length,d,g};}
+
+function qCard(q,no,exam,onAns){
+  const el=document.createElement('div'); el.className='q';
+  const prev=S.a[q.id];
+  el.innerHTML=`<div class="qh"><span>Soru ${no}</span><span>${esc(q.src)}${prev===true?' · ✓':prev===false?' · ✗':''}</span></div><div class="qt">${q.q}</div>`+
+    q.o.map((o,i)=>`<button class="opt" data-i="${i}"><span class="l">${L[i]}</span><span>${o.startsWith('<img')?o:esc(o)}</span></button>`).join('')+'<div class="fb"></div>';
+  let sel=null, done=false;
+  const show=()=>{ done=true; const good=sel===q.a; el.querySelectorAll('.opt').forEach((b,i)=>{ if(i===q.a) b.classList.add('ok'); else if(i===sel) b.classList.add('no'); });
+    el.querySelector('.fb').innerHTML=`<div class="ex"><b>${good?'✓ Doğru':sel===null?'Boş bırakıldı':'✗ Yanlış'}</b> · Doğru cevap: <b>${L[q.a]}</b>${q.e?'<br>'+esc(q.e):''}</div>`;
+    S.a[q.id]=sel===null?undefined:good; if(sel===null) delete S.a[q.id]; save(); return good; };
+  el.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{ if(done) return; sel=+b.dataset.i; el.querySelectorAll('.opt').forEach(x=>x.classList.toggle('sel',x===b)); if(!exam){ show(); if(onAns) onAns(); } });
+  el._fin=()=>{ if(done) return sel===q.a; return show(); };
+  return el;
+}
+
+const V={};
+V.home=()=>{ const t=st(ALLQ); const s26=SECS[0];
+  return `<section class="hero"><h1>İş Sağlığı ve Güvenliği</h1><p>2025 ve 2026 örnek soruların tamamı · ${ALLQ.length} soru</p>
+  <div class="stats"><div><b>${t.g}</b><span>doğru</span></div><div><b>${t.d-t.g}</b><span>yanlış</span></div><div><b>${t.d}/${t.n}</b><span>çözülen</span></div></div></section>
+  <div class="row"><a class="btn" href="#deneme">🎲 Deneme sınavı (25 soru)</a></div>
+  <div class="row"><a class="btn ghost" href="#yanlis">🔁 Yanlışlarım</a><a class="btn ghost" href="#bilgi">ℹ️ Bilgi</a></div>
+  <h2>Bu dönem (1–6. hafta)</h2>
+  ${secLink(s26,true)}
+  <h2>2025 örnek soruları (konulara göre)</h2>
+  ${SECS.slice(1).map(s=>secLink(s)).join('')}
+  <p class="foot">İlerlemen bu telefonda saklanır.<br>iPhone: Paylaş → Ana Ekrana Ekle</p>`; };
+function secLink(s,star){const t=st(s.qs);return `<a class="sec ${star?'star':''}" href="#k/${s.id}"><b>${s.t}</b><small>${t.n} soru · ${t.g} doğru · ${t.d-t.g} yanlış</small>${bar(t.n?t.g/t.n:0)}</a>`;}
+
+V.k=(id)=>{ const s=SECS.find(x=>x.id===id); if(!s) return V.home();
+  return `<h2 style="margin-top:4px">${s.t}</h2><p class="note">Şıkka dokununca cevap hemen görünür. ⚠️ işaretli açıklamalar: PDF'te cevap anahtarı olmadığı için bu cevapları ders notundan kontrol et.</p><div id="ql"></div>
+  <div class="row"><button class="btn ghost" id="sifirla">Bu bölümü sıfırla</button><a class="btn" href="#">Ana sayfa</a></div>`; };
+V.k.after=(id)=>{ const s=SECS.find(x=>x.id===id); if(!s) return; const ql=$('#ql'); s.qs.forEach((q,i)=>ql.appendChild(qCard(q,i+1,false)));
+  $('#sifirla').onclick=()=>{ if(!confirm('Bu bölümdeki cevapların silinsin mi?')) return; s.qs.forEach(q=>delete S.a[q.id]); save(); go(); }; };
+
+let pool=[], scope='hepsi';
+V.deneme=()=>`<h2 style="margin-top:4px">🎲 Deneme sınavı</h2>
+  <div class="chips"><button class="chip ${scope==='hepsi'?'on':''}" data-s="hepsi">Tüm sorular</button><button class="chip ${scope==='2026'?'on':''}" data-s="2026">Sadece 2026 (1–6. hafta)</button></div>
+  <p class="note">25 soru. Hepsini işaretle, en altta <b>Bitir ve puanla</b>'ya bas. Cevaplar o zaman görünür.</p><div id="ql"></div>
+  <div class="row"><button class="btn" id="bitir">Bitir ve puanla</button></div><div id="sonuc"></div><div class="row"><button class="btn ghost" id="yeni">Yeni deneme</button></div>`;
+V.deneme.after=()=>{ const src=scope==='2026'?SECS[0].qs:ALLQ; pool=shuffle(src).slice(0,Math.min(25,src.length)); const ql=$('#ql'); const cards=pool.map((q,i)=>{const c=qCard(q,i+1,true); ql.appendChild(c); return c;});
+  document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{scope=b.dataset.s; go();});
+  $('#yeni').onclick=()=>{ go(); scrollTo(0,0); };
+  $('#bitir').onclick=()=>{ let g=0; cards.forEach(c=>{ if(c._fin()) g++; }); $('#sonuc').innerHTML=`<div class="score">${g}/${pool.length}<small>%${Math.round(g/pool.length*100)} başarı</small></div>`; $('#bitir').disabled=true; $('#sonuc').scrollIntoView({behavior:'smooth'}); }; };
+
+V.yanlis=()=>`<h2 style="margin-top:4px">🔁 Yanlışlarım</h2><p class="note">Yanlış yaptığın sorular. Doğru yaparsan listeden çıkar.</p><div id="ql"></div><div class="row"><a class="btn" href="#">Ana sayfa</a></div>`;
+V.yanlis.after=()=>{ const w=ALLQ.filter(q=>S.a[q.id]===false); const ql=$('#ql'); if(!w.length){ql.innerHTML='<p class="empty">Yanlışın yok 🎉 Önce soru çöz.</p>';return;} w.forEach((q,i)=>ql.appendChild(qCard(q,i+1,false))); };
+
+V.bilgi=()=>`<h2 style="margin-top:4px">ℹ️ Bilgi</h2>
+  <p>Bu sitede hocanın <b>İş Sağlığı ve Güvenliği Örnek Sorular 2025</b> (199 soru) ve <b>2026 (1–6. hafta)</b> (24 soru) PDF'lerindeki bütün sorular var.</p>
+  <p class="note">⚠️ PDF'lerde cevap anahtarı yok. Cevaplar 6331 sayılı İSG Kanunu, 4857 sayılı İş Kanunu, 5510 sayılı Kanun ve ilgili yönetmeliklere göre işaretlendi. Emin olunamayan sorularda açıklamada ⚠️ uyarısı var, onları ders notundan kontrol et.</p>
+  <p>2025 PDF'inde bazı soru numaraları tekrar ediyor (ör. iki tane 105–121). Her sorunun sağ üstünde PDF'teki numarası yazıyor.</p>
+  <div class="row"><button class="btn ghost" id="hepsil">Tüm ilerlemeyi sıfırla</button></div>`;
+V.bilgi.after=()=>{ $('#hepsil').onclick=()=>{ if(confirm('Bütün cevapların silinsin mi?')){S={a:{}};save();location.hash='';} }; };
+
+function go(){ const h=(location.hash||'').replace(/^#\/?/,''); const [n,arg]=h.split('/'); const v=V[n]||V.home; app.innerHTML=v(arg); if(v.after) v.after(arg); $('#back').style.visibility=v===V.home?'hidden':'visible'; }
+$('#back').onclick=()=>{ if(history.length>1) history.back(); else location.hash=''; };
+addEventListener('hashchange',()=>{go();scrollTo(0,0);}); go();
+if('serviceWorker' in navigator) addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+})();
+</script>
+</body>
+</html>
